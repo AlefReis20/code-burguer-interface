@@ -1,10 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { Link, useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 
 import LoginImg from '../../assets/login-image.svg'
 import Logo from '../../assets/logo.svg'
+import { Button, ErrorMessage } from '../../components'
+import { useUser } from '../../hooks/UserContext'
 import api from '../../services/api'
 import {
   Container,
@@ -12,12 +16,13 @@ import {
   ContainerItens,
   Label,
   Input,
-  Button,
   SingUpLink,
-  ErrorMessage,
 } from './styles'
 
-function Login() {
+export function Login() {
+  const history = useHistory()
+  const { putUserData } = useUser()
+
   const schema = Yup.object().shape({
     email: Yup.string()
       .email('Digite um e-mail válido.')
@@ -36,11 +41,27 @@ function Login() {
   })
 
   const onSubmit = async clientData => {
-    const response = await api.post('sessions', {
-      email: clientData.email,
-      password: clientData.password,
-    })
-    console.log(response)
+    const { data } = await toast.promise(
+      api.post('sessions', {
+        email: clientData.email,
+        password: clientData.password,
+      }),
+      {
+        pending: 'Verificando seus dados.',
+        success: 'Seja Bem-Vindo(a).',
+        error: 'Verifique seu email e senha.',
+      }
+    )
+
+    putUserData(data)
+
+    setTimeout(() => {
+      if (data.admin) {
+        history.push('/pedidos')
+      } else {
+        history.push('/')
+      }
+    }, 1000)
   }
 
   return (
@@ -66,15 +87,18 @@ function Login() {
           />
           <ErrorMessage>{errors.password?.message}</ErrorMessage>
 
-          <Button type="submit">Sign In</Button>
+          <Button type="submit" style={{ marginTop: 75, marginBottom: 25 }}>
+            Sign In
+          </Button>
         </form>
 
         <SingUpLink>
-          Não possui conta ? <a>Sing Up</a>
+          Não possui conta?{' '}
+          <Link style={{ color: '#FFF' }} to="/cadastro">
+            Sing Up
+          </Link>
         </SingUpLink>
       </ContainerItens>
     </Container>
   )
 }
-
-export default Login
