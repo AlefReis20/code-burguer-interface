@@ -39,7 +39,6 @@ function ListProducts() {
 
   const deleteProduct = async productId => {
     const deleteProduct = products.filter(product => product.id !== productId)
-    console.log(deleteProduct)
 
     setProducts(deleteProduct)
     await api.delete(deleteProduct)
