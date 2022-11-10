@@ -76,4 +76,6 @@ export const ContainerInput = styled.div`
   }
 `
 
-export const Label = styled.p``
+export const Label = styled.p`
+  color: #fff;
+`

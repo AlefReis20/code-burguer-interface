@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete'
 import ReactSelect from 'react-select'
 import styled from 'styled-components'
 
@@ -37,4 +38,9 @@ export const LinkMenu = styled.a`
   text-align: center;
   color: #323d5d;
   cursor: pointer;
+`
+export const DeleteIconStyles = styled(DeleteIcon)`
+  cursor: pointer;
+  color: #323d5d;
+  text-align: center;
 `

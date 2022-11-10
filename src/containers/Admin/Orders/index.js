@@ -89,6 +89,7 @@ function Orders() {
               <TableCell>Cliente</TableCell>
               <TableCell>Data do Pedido</TableCell>
               <TableCell>Status do Pedido</TableCell>
+              <TableCell>Deletar Pedido</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

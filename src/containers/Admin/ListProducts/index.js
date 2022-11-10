@@ -37,11 +37,11 @@ function ListProducts() {
     push(paths.EditProduct, { product })
   }
 
-  const deleteProduct = async productId => {
-    const deleteProduct = products.filter(product => product.id !== productId)
+  const deleteProduct = async ({ id }) => {
+    const deleteProduct = products.filter(product => product.id !== id)
 
     setProducts(deleteProduct)
-    await api.delete(deleteProduct)
+    await api.delete(`products/${id}`)
   }
   return (
     <Container>
